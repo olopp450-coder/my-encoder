@@ -5,19 +5,20 @@ jobs:
   encode:
     runs-on: ubuntu-latest
     steps:
-      - name: Install Tools
-        run: sudo apt-get update && sudo apt-get install -y ffmpeg wget
+      - name: Install gdown and ffmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          pip install gdown
 
       - name: Download From Drive
         run: |
-          # ضع الـ ID الخاص بك في السطرين القادمين مكان 'YOUR_ID_HERE'
-          ID="16uvpleoh7qafxs9yxi6mck0-y1ddcdgw"
-          CONFIRM=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate "https://docs.google.com/uc?export=download&id=16uvPLEoh7qafxS9YxI6mCK0-YlddcDgw" -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')
-          wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$CONFIRM&id=16uvPLEoh7qafxS9YxI6mCK0-YlddcDgw" -O input.mkv
-          rm -rf /tmp/cookies.txt
+          # استبدل الـ ID بالخاص بك (الذي ينتهي بـ gw)
+          gdown --id "16uvpleoh7qafxs9yxi6mck0-y1ddcdgw" -O input.mkv
 
       - name: Start AV1 Encoding
         run: |
+          # تأكد أن اسم الملف المحمل هو input.mkv
           ffmpeg -i input.mkv -c:v libsvtav1 -preset 8 -crf 26 -pix_fmt yuv420p10le -svtav1-params tune=0:film-grain=8 -c:a libopus -b:a 96k output_av1.mkv
 
       - name: Upload Result
