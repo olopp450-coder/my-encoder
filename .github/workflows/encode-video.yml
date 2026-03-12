@@ -10,12 +10,14 @@ jobs:
 
       - name: Download From Drive
         run: |
-          # تأكد من وضع الـ ID الخاص بملفك الـ mkv هنا
-          wget --no-check-certificate 'https://docs.google.com/uc?export=download&id=16uvPLEoh7qafxS9YxI6mCK0-YlddcDgw' -O input.mkv
+          # ضع الـ ID الخاص بك في السطرين القادمين مكان 'YOUR_ID_HERE'
+          ID="16uvpleoh7qafxs9yxi6mck0-y1ddcdgw"
+          CONFIRM=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate "https://docs.google.com/uc?export=download&id=$ID" -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')
+          wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$CONFIRM&id=$ID" -O input.mkv
+          rm -rf /tmp/cookies.txt
 
       - name: Start AV1 Encoding
         run: |
-          # هنا سيقوم السيرفر بتحويل الـ mkv الأصلي إلى mkv مكوّد بـ AV1
           ffmpeg -i input.mkv -c:v libsvtav1 -preset 8 -crf 26 -pix_fmt yuv420p10le -svtav1-params tune=0:film-grain=8 -c:a libopus -b:a 96k output_av1.mkv
 
       - name: Upload Result
