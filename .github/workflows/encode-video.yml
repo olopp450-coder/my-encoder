@@ -12,8 +12,8 @@ jobs:
         run: |
           # ضع الـ ID الخاص بك في السطرين القادمين مكان 'YOUR_ID_HERE'
           ID="16uvpleoh7qafxs9yxi6mck0-y1ddcdgw"
-          CONFIRM=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate "https://docs.google.com/uc?export=download&id=$ID" -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')
-          wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$CONFIRM&id=$ID" -O input.mkv
+          CONFIRM=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate "https://docs.google.com/uc?export=download&id=16uvPLEoh7qafxS9YxI6mCK0-YlddcDgw" -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')
+          wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$CONFIRM&id=16uvPLEoh7qafxS9YxI6mCK0-YlddcDgw" -O input.mkv
           rm -rf /tmp/cookies.txt
 
       - name: Start AV1 Encoding
