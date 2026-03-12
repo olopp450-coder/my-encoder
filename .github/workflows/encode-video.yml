@@ -11,7 +11,7 @@ jobs:
       - name: Download From Drive
         run: |
           # تأكد من وضع الـ ID الخاص بملفك الـ mkv هنا
-          wget --no-check-certificate '16uvPLEoh7qafxS9YxI6mCK0-YlddcDgw' -O input.mkv
+          wget --no-check-certificate 'https://docs.google.com/uc?export=download&id=16uvPLEoh7qafxS9YxI6mCK0-YlddcDgw' -O input.mkv
 
       - name: Start AV1 Encoding
         run: |
